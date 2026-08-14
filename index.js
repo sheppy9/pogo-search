@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedTypes = Array.from(checkboxes).map(cb => cb.value);
 
         if (selectedTypes.length === 0) {
-            outputBox.innerHTML = '<span class="placeholder">Select types to generate string</span>';
+            if (outputBox) outputBox.innerHTML = '<span class="placeholder">Select types to generate string</span>';
             return;
         }
 
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const generatedString = `${fastMoves}&${chargedMoves}`;
         
-        outputBox.textContent = generatedString;
+        if (outputBox) outputBox.textContent = generatedString;
         
         // Automatically copy to clipboard
         copyToClipboard(generatedString);
