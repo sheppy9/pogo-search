@@ -2,6 +2,7 @@
 - Single page html using only index.html, index.js and index.css
 - Use modern web development practices, mobile first design and dark theme
 - You may reference from https://pgraid.win
+- Include simple instruction and the donation link from https://pgraid.win
 - multiple radio button using the types as text
 - User can select multiple radio button
 - On each selection, generate the following string and copy to clipboard
