@@ -1,0 +1,272 @@
+:root {
+    /* Base Colors - Premium Dark Theme */
+    --bg-color: #0b0c10;
+    --surface-color: rgba(30, 32, 38, 0.6);
+    --surface-hover: rgba(45, 48, 56, 0.8);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #a0aab2;
+    --accent-color: #00f2fe;
+    
+    /* Type Colors */
+    --type-bug: #92BC2C;
+    --type-dark: #595761;
+    --type-dragon: #0C69C8;
+    --type-electric: #F2D94E;
+    --type-fairy: #EE90E6;
+    --type-fighting: #D3425F;
+    --type-fire: #FBA54C;
+    --type-flying: #A1BBEC;
+    --type-ghost: #5F6DBC;
+    --type-grass: #5FBD58;
+    --type-ground: #DA7C4D;
+    --type-ice: #75D0C1;
+    --type-normal: #A0A29F;
+    --type-poison: #B763CF;
+    --type-psychic: #FA8581;
+    --type-rock: #C9BB8A;
+    --type-steel: #5695A3;
+    --type-water: #539DDF;
+    
+    /* Spacing & Sizes */
+    --border-radius: 12px;
+    --transition-speed: 0.2s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.05), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(79, 172, 254, 0.05), transparent 25%);
+    background-attachment: fixed;
+}
+
+h1, h2, h3, .type-label {
+    font-family: 'Outfit', sans-serif;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+header .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Controls Header */
+.controls-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.controls-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.clear-btn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.clear-btn:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.clear-btn:active {
+    transform: scale(0.95);
+}
+
+/* Type Grid */
+.type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+/* Type Checkboxes styled as buttons */
+.type-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.type-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Hover effects */
+@media (hover: hover) {
+    .type-label:hover {
+        background: var(--surface-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Selected State */
+.type-checkbox:checked + .type-label {
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Active animation */
+.type-label:active {
+    transform: scale(0.96) translateY(0);
+}
+
+/* Dynamic Type Colors assigned via JS style */
+.type-label.selected {
+    /* Background set inline by JS */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Output Box */
+.output-container {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin-bottom: 2rem;
+}
+
+.output-container h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.output-box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 1rem;
+    word-break: break-all;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.output-box .placeholder {
+    color: var(--text-secondary);
+    font-style: italic;
+    opacity: 0.6;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: auto;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--text-primary);
+    color: var(--bg-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .type-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

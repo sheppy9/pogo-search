@@ -1,0 +1,33 @@
+# Project
+- Single page html using only index.html, index.js and index.css
+- Use modern web development practices, mobile first design and dark theme
+- You may reference from https://pgraid.win
+- multiple radio button using the types as text
+- User can select multiple radio button
+- On each selection, generate the following string and copy to clipboard
+- Example if user select "bug" radio button
+    - Generate `@1bug&@2bug,@3bug` and copy to clipboard
+- Example if user select "bug" and "dark"
+    - Generate `@1bug,@1dark&@2bug,@2dark,@3bug,@3dark` and copy to clipboard
+- Example if user select "bug", "dark" and "dragon"
+    - Generate `@1bug,@1dark,@1dragon&@2bug,@2dark,@2dragon,@3bug,@3dark,@3dragon` and copy to clipboard
+
+# Types
+- Bug
+- Dark
+- Dragon
+- Electric
+- Fairy
+- Fighting
+- Fire
+- Flying
+- Ghost
+- Grass
+- Ground
+- Ice
+- Normal
+- Poison
+- Psychic
+- Rock
+- Steel
+- Water
