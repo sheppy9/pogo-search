@@ -49,16 +49,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clearBtn.addEventListener('click', () => {
         const checkboxes = document.querySelectorAll('.type-checkbox');
+        let changed = false;
         checkboxes.forEach(cb => {
-            cb.checked = false;
-            // trigger change event to reset styles and output
-            cb.dispatchEvent(new Event('change'));
+            if (cb.checked) {
+                cb.checked = false;
+                const wrapper = cb.parentElement;
+                wrapper.classList.remove('selected');
+                wrapper.style.backgroundColor = '';
+                wrapper.style.borderColor = '';
+                changed = true;
+            }
         });
+        if (changed) {
+            updateOutput();
+        }
     });
 
+    let updateTimeout;
     function updateOutput() {
         const checkboxes = document.querySelectorAll('.type-checkbox:checked');
         const selectedTypes = Array.from(checkboxes).map(cb => cb.value);
+
+        if (updateTimeout) {
+            clearTimeout(updateTimeout);
+        }
 
         if (selectedTypes.length === 0) {
             if (outputBox) outputBox.innerHTML = '<span class="placeholder">Select types to generate string</span>';
@@ -78,8 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (outputBox) outputBox.textContent = generatedString;
         
-        // Automatically copy to clipboard
-        copyToClipboard(generatedString);
+        // Automatically copy to clipboard, debounced to prevent performance issues
+        updateTimeout = setTimeout(() => {
+            copyToClipboard(generatedString);
+        }, 100);
     }
 
     let toastTimeout;
