@@ -13,23 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create checkboxes dynamically
     types.forEach(type => {
         const lowerType = type.toLowerCase();
-        
+
         const wrapper = document.createElement('label');
         wrapper.className = 'type-label';
         // Set the CSS variable for the background color hover/active states
         // In CSS we defined --type-bug, --type-dark, etc.
         const typeColorVar = `var(--type-${lowerType})`;
-        
+
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'type-checkbox';
         checkbox.value = lowerType;
-        
+
         const text = document.createTextNode(type);
-        
+
         wrapper.appendChild(checkbox);
         wrapper.appendChild(text);
-        
+
         // Add event listener for dynamic styling and logic
         checkbox.addEventListener('change', () => {
             if (checkbox.checked) {
@@ -82,16 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Generate the string based on selected types
         // Part 1 (Fast Moves): @1type1,@1type2
         const fastMoves = selectedTypes.map(t => `@1${t}`).join(',');
-        
+
         // Part 2 (Charged Moves): @2type1,@2type2,@3type1,@3type2
         const charged1 = selectedTypes.map(t => `@2${t}`).join(',');
         const charged2 = selectedTypes.map(t => `@3${t}`).join(',');
         const chargedMoves = `${charged1},${charged2}`;
-        
+
         const generatedString = `${fastMoves}&${chargedMoves}`;
-        
+
         if (outputBox) outputBox.textContent = generatedString;
-        
+
         // Automatically copy to clipboard, debounced to prevent performance issues
         updateTimeout = setTimeout(() => {
             copyToClipboard(generatedString);
@@ -100,20 +100,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let toastTimeout;
     function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            showToast();
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-        });
+        // Modern Clipboard API (Requires secure context like HTTPS or localhost)
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        } else {
+            // Fallback for older browsers or non-secure contexts (e.g., HTTP server)
+            try {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+
+                // Make the textarea invisible to prevent layout shifts
+                textArea.style.position = "fixed";
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                textArea.style.opacity = "0";
+
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast();
+                } else {
+                    console.error('Fallback: Copy command was unsuccessful');
+                }
+
+                document.body.removeChild(textArea);
+            } catch (err) {
+                console.error('Fallback: unable to copy', err);
+            }
+        }
     }
 
     function showToast() {
         toast.classList.add('show');
-        
+
         if (toastTimeout) {
             clearTimeout(toastTimeout);
         }
-        
+
         toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
         }, 2000);
