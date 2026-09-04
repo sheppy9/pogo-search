@@ -243,8 +243,8 @@ footer {
 /* Toast Notification */
 .toast {
     position: fixed;
-    bottom: 2rem;
-    left: 50%;
+    top: 5rem;
+    right: 0%;
     transform: translateX(-50%) translateY(100px);
     background: var(--text-primary);
     color: var(--bg-color);
