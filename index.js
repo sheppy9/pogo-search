@@ -5,6 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
         "Normal", "Poison", "Psychic", "Rock", "Steel", "Water"
     ];
 
+    const typeIconIds = {
+        bug: 7, dark: 17, dragon: 16, electric: 13, fairy: 18, fighting: 2,
+        fire: 10, flying: 3, ghost: 8, grass: 12, ground: 5, ice: 15,
+        normal: 1, poison: 4, psychic: 14, rock: 6, steel: 9, water: 11
+    };
+    const typeIconBase = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/brilliant-diamond-shining-pearl/small';
+
     const typeGrid = document.getElementById('type-grid');
     const outputBox = document.getElementById('output-box');
     const clearBtn = document.getElementById('clear-btn');
@@ -25,9 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.className = 'type-checkbox';
         checkbox.value = lowerType;
 
+        const icon = document.createElement('img');
+        icon.className = 'type-icon';
+        icon.src = `${typeIconBase}/${typeIconIds[lowerType]}.png`;
+        icon.alt = `${type} icon`;
+        icon.loading = 'lazy';
+
         const text = document.createTextNode(type);
 
         wrapper.appendChild(checkbox);
+        wrapper.appendChild(icon);
         wrapper.appendChild(text);
 
         // Add event listener for dynamic styling and logic
